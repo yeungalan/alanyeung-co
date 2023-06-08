@@ -1,256 +1,683 @@
-<!DOCTYPE html>
-<html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Alan (Ho Lun) Yeung</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
 
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Gonna try something new <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>-->
-    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Alan Yeung's Page</title>
-    <style>
-        .ui.segment {
-            background: rgb(255, 255, 255, 40%);
-        }
-    </style>
-</head>
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
 
-<body>
-    <br>
-    <div class="ui container">
-        <div class="ui segment">
-            <!-- Header -->
-            <h2 class="ui header">
-                <i class="server icon"></i>
-                <div class="content">
-                    Alanyeung's Services Selector
-                    <div class="sub header">Please select your destination website from the list below</div>
-                </div>
-            </h2>
-            <div class="ui divider"></div>
-            <!-- Self hosted Link List -->
-            <p>Public Services List</p>
-            <div class="ui list" id="selfhostedlist">
-            </div>
-            <!-- Self hosted (non-CAS) Link List -->
-            <p>Restricted Services List (Seperate account required for each service)</p>
-            <div class="ui list" id="selfhosted-nonCASlist">
-            </div>
-            <!-- Self hosted (CAS) Link List -->
-            <p>Restricted Services List (Central Authentication Service)</p>
-            <div class="ui list" id="selfhosted-CASlist">
-            </div>
-            <!-- Friend Link List -->
-            <div class="ui divider"></div>
-            <p id="uwheader">University of Washington (UW Authentication System)</p>
-            <div class="ui list" id="uwlist"></div>
-            <!-- Friend Link List -->
-            <div class="ui divider"></div>
-            <p>Friends List</p>
-            <div class="ui list" id="friendlist"></div>
-            <!-- Footer -->
-            <div class="ui divider"></div>
-            <p id="clientinfo"></p>
-            <p>Last updated on 2021 Sep. Powered by Alan Yeung, and <a href="https://semantic-ui.com/">Semantic UI</a>, Hosted @ Github</p>
-        </div>
-    </div>
-    <br>
-</body>
-<script>
-    bubbly({
-        colorStart: '#d5d5d5',
-        colorStop: '#d5d5d5',
-    });
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
 
-    var link = JSON.parse(`[
-  {
-    "description": "HKWTC Git Service (Gogs)",
-    "link": "https://git.hkwtc.org/",
-    "cat": "selfhosted-nonCAS"
-  },
-    {
-    "description": "Gitlab Service",
-    "link": "https://gitlab.alanyeung.co/",
-    "cat": "selfhosted-CAS"
-  },
-  {
-    "description": "Jenkins",
-    "link": "https://jenkins.alanyeung.co/",
-    "cat": "selfhosted-CAS"
-  },
-  {
-    "description": "Test Server",
-    "link": "https://test.alanyeung.co/",
-    "cat": "selfhosted"
-  },
-  {
-    "description": "AYTechnology",
-    "link": "https://aytechnology.us/",
-    "cat": "selfhosted"
-  },
-  {
-    "description": "Dynmap @ Minecraft Server",
-    "link": "http://mc.alanyeung.co:8123",
-    "cat": "selfhosted"
-  },
-  {
-    "description": "Travian",
-    "link": "https://test.alanyeung.co/travian/",
-    "cat": "selfhosted-nonCAS"
-  },
-  {
-    "description": "ArOZOS Server 01",
-    "link": "https://s01.aroz.alanyeung.co/",
-    "cat": "selfhosted-CAS"
-  },
-  {
-    "description": "ArOZOS Server 02",
-    "link": "https://s02.aroz.alanyeung.co/",
-    "cat": "selfhosted-CAS"
-  },
-  {
-    "description": "ArOZOS Server 03",
-    "link": "https://s03.aroz.alanyeung.co/",
-    "cat": "selfhosted-CAS"
-  },
-  {
-    "description": "ArOZOS Server CAS",
-    "link": "https://auth.alanyeung.co/",
-    "cat": "selfhosted-CAS"
-  },
-  {
-    "description": "Synology NAS",
-    "link": "https://alanyeung.co/synology.php",
-    "cat": "selfhosted-nonCAS"
-  },
-  {
-    "description": "URL shortner",
-    "link": "https://s.alanyeung.co",
-    "cat": "selfhosted"
-  },
-  {
-    "description": "FTP Server (HTTPS, HyperXraft)",
-    "link": "https:/ftp.alanyeung.co/",
-    "cat": "selfhosted"
-  },
-  {
-    "description": "FTP Server (FTP Protocol)",
-    "link": "ftp:/ftp.alanyeung.co/",
-    "cat": "selfhosted-CAS"
-  },
-  {
-    "description": "Uptime mointor",
-    "link": "https://stats.uptimerobot.com/JKvyVhBqBO",
-    "cat": "selfhosted"
-  },
-  {
-    "description": "HKWTC",
-    "link": "http://hkwtc.org",
-    "cat": "friend"
-  },
-  {
-    "description": "IMUSLAB",
-    "link": "http:/imuslab.com",
-    "cat": "friend"
-  },
-  {
-    "description": "My UW",
-    "link": "https://my.uw.edu",
-    "cat": "uw"
-  },
-  {
-    "description": "My CSE",
-    "link": "http://mycse.cs.washington.edu/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE Slack",
-    "link": "https://uw-cse-ugrad.slack.com/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE SSH Server",
-    "link": "ssh://attu.cs.washington.edu",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE VDI Server",
-    "link": "https://vdi.cs.washington.edu/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW ENGR VDI Server",
-    "link": "https://vdi.engr.washington.edu/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE Gitlab",
-    "link": "https://gitlab.cs.washington.edu/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW Network Stat",
-    "link": "https://networks.uw.edu/networks/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE SSH Server Stat",
-    "link": "https://nms.cs.washington.edu/stats/index.php?group=instr",
-    "cat": "uw"	
-  },
-  {
-    "description": "UW CSE SMB Share",
-    "link": "smb://tango.cs.washington.edu",
-    "cat": "uw"	
-  },
-  {
-    "description": "UW My Plan",
-    "link": "smb://myplan.uw.edu",
-    "cat": "uw"	
-  }
-]`);
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
 
-    $(link).each(function(index, item) {
-        var appendTo = "selfhostedlist";
-        if (item["cat"] == "friend") {
-            appendTo = "friendlist";
-        } else if (item["cat"] == "uw") {
-            appendTo = "uwlist";
-        } else if (item["cat"] == "selfhosted-nonCAS") {
-            appendTo = "selfhosted-nonCASlist";
-        } else if (item["cat"] == "selfhosted-CAS") {
-            appendTo = "selfhosted-CASlist";
-        }
-        $("#" + appendTo).append('<div class="item"><a href="' + item["link"] + '">' + item["description"] + '</a></div>');
-    });
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
 
-    $.getJSON("./geoip/", function(data) {
-        if (data["Country"]["Names"] != null) {
-            $("#clientinfo").text("You are from " + data["Country"]["Names"]["en"] + " (" + data["Country"]["Names"]["ja"] + ") " + country2emoji(data["Country"]["IsoCode"]));
-        }
-    });
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
 
-    //https://gist.github.com/theory-of-soul/220dfe7a7f383325510be31ffb0d362e
-    function country2emoji(country_code) {
-        var OFFSET = 127397;
-        var cc = country_code.toUpperCase();
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
 
-        function _toConsumableArray(arr) {
-            if (Array.isArray(arr)) {
-                for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-                    arr2[i] = arr[i];
-                }
-                return arr2;
-            } else {
-                return Array.from(arr);
-            }
-        }
-        return /^[A-Z]{2}$/.test(cc) ? String.fromCodePoint.apply(String, _toConsumableArray([].concat(_toConsumableArray(cc)).map(function(c) {
-            return c.charCodeAt() + OFFSET;
-        }))) : null;
-    }
-</script>
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
 
-</html>
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="dca4cd77-9044-48bb-822b-5eb9b995f817" class="page sans"><header><img class="page-cover-image" src="webfiles/IMG_0446.jpg" style="object-position:center 73.17%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">💻</span></div><h1 class="page-title">Alan (Ho Lun) Yeung</h1><p class="page-description"></p></header><div class="page-body"><p id="ad28a329-dab2-4ad2-bea2-fced946e0625" class="">Seattle Area, WA 🇺🇸</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="eed52bfd-55ff-438a-ac7d-82ab567d61e2"><div style="font-size:1.5em"><span class="icon">👋</span></div><div style="width:100%">Hi there! I&#x27;m Ho Lun, a Computer Engineering student at the University of Washington in Seattle, WA. I&#x27;m passionate about software engineering and leveraging technology to solve real-world challenges. Currently, I&#x27;m on track to graduate in June 2023.</div></figure><h1 id="674d9a85-4383-43cf-85d7-da8427752028" class="">Connect Me</h1><p id="f05b2bf1-66ed-4e95-93b0-ee0aabf2aae2" class=""><a href="https://www.linkedin.com/in/ho-yeung/">https://www.linkedin.com/in/ho-yeung/</a></p><p id="2c389a67-5198-4355-a208-719b998f2365" class=""><a href="https://github.com/yeungalan">https://github.com/yeungalan</a></p><p id="62627251-c71a-492e-b00a-1affe5616194" class="">hoyeung[at]cs.washington.edu</p><h1 id="186998a7-7e5d-48b7-8aa3-79c7f97bef90" class="">Projects</h1><h3 id="339e9f61-ecec-48a9-a273-766afc0f4496" class="">arozos</h3><ul id="895a950b-fe4e-4ff8-85bd-0c90b58bbd1f" class="bulleted-list"><li style="list-style-type:disc">Utilized <strong>Golang</strong> and <strong>Bash</strong> to build the backend of Arozos, an open-source web operating system (rated ~1100 stars on Github and ranked 3rd in web desktop topics) which can run on <strong>Raspberry Pi</strong></li></ul><ul id="2c372893-684e-4c0a-99d2-daeb54929154" class="bulleted-list"><li style="list-style-type:disc">Overhauled obsolete legacy source code of two production applications, resulting in increased usability and reduced run time performance by half</li></ul><ul id="be2cb744-8cf5-472e-92db-96bff5deae2b" class="bulleted-list"><li style="list-style-type:disc">Reduced web desktop loading time by 3x and web page response time from 700ms to 100ms by refining the logic and reducing the amount of AJAX calls</li></ul><h3 id="ce7ed088-2fd0-4135-bb4b-3204ee95dc63" class="">OAuth/SAML2 authentication server</h3><ul id="d1ea0bb9-a37c-4794-ac4d-fc1ea5f8b765" class="bulleted-list"><li style="list-style-type:disc"><strong>Golang-based</strong> kv-db authentication provider</li></ul><ul id="c73d7dac-c960-4351-beb7-a1cdeb5401b0" class="bulleted-list"><li style="list-style-type:disc">Unification of the server’s sign-in user experience as well as enhancing the server security</li></ul><h3 id="ab4007ed-5c55-4bde-9a71-ec6871450cf9" class="">Virtual Local Area Network</h3><ul id="a2802e2a-c9a5-47f1-82df-f429af1f54a3" class="bulleted-list"><li style="list-style-type:disc">Utilized a combination of networking protocols, such as <strong>TCP/IP, and DHCPv4</strong>, to establish client connections and IP assignment.</li></ul><ul id="c20c2aec-c891-4564-b8b2-041fdb0448e7" class="bulleted-list"><li style="list-style-type:disc">Designed and implemented a local area network (LAN) system for seamless communication and resource sharing within a closed network environment.</li></ul><p id="9d793ffa-9580-4a06-ba5a-3530a2aef5b5" class="">
+</p><hr id="f127b08f-396f-4d19-b722-df0e40894713"/><h1 id="246cb85e-7a5c-44cc-bb57-33d977b47f25" class="">Work Experience</h1><h3 id="74ccaf3f-0589-454d-8c79-cf6b4a9e8402" class="">Cloud Support Associate Intern</h3><p id="2118fd71-4369-462e-9058-8b78bddf8d34" class="block-color-gray"><em><strong>Amazon Web Services (AWS)</strong></em><em>, Seattle, WA – (June 2022 - August 2022)</em></p><ul id="b1908d36-b978-4040-a019-e8141be1f12e" class="bulleted-list"><li style="list-style-type:disc">Mastered the understanding and use of <strong>AWS Serverless architecture</strong> which helps businesses scale and ensure availability across different regions.</li></ul><ul id="c72bb586-fede-4749-9c23-10f7fb5b8c91" class="bulleted-list"><li style="list-style-type:disc">Expert in designing <strong>complex multi-tier network architecture </strong>that meets compliance requirements</li></ul><h3 id="8f724d41-456e-42de-92b9-ee9d1df860f7" class="">Software Engineer</h3><p id="cc06bfe9-48f0-4b51-94c4-84adbc1273de" class="block-color-gray"><em><strong>arozos (imuslab)</strong></em><em>, Hong Kong SAR – (2018 - June 2022)</em></p><ul id="6c620235-d6e4-49b2-a889-1878d9ef11bb" class="bulleted-list"><li style="list-style-type:disc">Utilized <strong>Golang</strong> and <strong>Bash</strong> to build the backend of Arozos, an open-source web operating system (rated ~1100 stars on Github and ranked 3rd in web desktop topics) which can run on <strong>Raspberry Pi</strong></li></ul><ul id="66e763dd-f967-4bcc-aaec-14f7c31c6aaf" class="bulleted-list"><li style="list-style-type:disc">Overhauled obsolete legacy source code of two production applications, resulting in increased usability and reduced run time performance by half</li></ul><ul id="dcf28131-8803-40f5-8634-dce74daa9973" class="bulleted-list"><li style="list-style-type:disc">Reduced web desktop loading time by 3x and web page response time from 700ms to 100ms by refining the logic and reducing the amount of AJAX calls</li></ul><h3 id="8fd32484-8aff-48c8-9b8a-bbce5c877600" class="">Freelance Programmer</h3><p id="923a2e1f-b8ba-441a-b5d5-5af11cb046b8" class="block-color-gray"><em><strong>AYTechnology</strong></em><em>, Seattle, WA – (2020 - June 2022)</em></p><ul id="33214515-ebf2-4a2e-af17-ec3bbd996cd5" class="bulleted-list"><li style="list-style-type:disc">Developed full-stack web apps for clients such as files database systems by using <strong>PHP </strong>and <strong>golang </strong>as backend</li></ul><ul id="007460f7-381f-423a-8f08-bee82d9ca2ea" class="bulleted-list"><li style="list-style-type:disc">Created a database system for the client and cut down the search time from 2-3 minutes to just a minute</li></ul><ul id="f04c015c-d75d-4adc-8d30-a7cb6f0822db" class="bulleted-list"><li style="list-style-type:disc"><strong>Tech Stack: C/C++ or PHP or golang &amp; MySQL</strong></li></ul><p id="fb2d9895-1fe1-45e6-8537-fb5a83c78cb6" class="">
+</p><hr id="7810e590-635b-45bf-adc0-215d86bd1188"/><h1 id="a26abed2-1d4f-4526-a0f3-7f9cfe73e8d5" class="">Languages</h1><h3 id="862a71f9-fd56-4c5b-b547-1eeea7378a91" class="">English 🇺🇸</h3><p id="09c2e770-0fec-4453-bebd-7948340f94ea" class="">Proficient speaker</p><h3 id="9822d213-d75c-4fad-bcc4-1a1f699c6167" class="">Chinese (Mandarin/Cantonese) </h3><p id="c5e6f6a5-3684-45b5-a274-692d29b222fe" class="">Native speaker</p><p id="133a47e2-9def-4cdd-a7a5-141986b634bd" class="">
+</p><hr id="f21a8e36-84d9-414a-86a1-a0627ea732e4"/><h1 id="36dbda3b-2760-4094-9238-0d50ac379014" class="">Education</h1><h3 id="dbcd3ab1-737d-4bc8-b859-ce90762ac1c3" class="">Bachelor of Science in Computer Engineering degree</h3><p id="6acc4bda-07d3-4982-ab8b-177a45b58085" class="block-color-gray"><em>2021-2023</em></p><p id="4a9a2681-05a8-4706-8751-91ca09a74849" class="">GPA 3.70</p><p id="5e82ee4e-d492-49bf-bf82-0f6678da0b8b" class="">University of Washington Seattle Campus - Seattle, WA</p><p id="0c53b177-4ce8-4feb-8eef-4e01efa04b53" class="">
+</p><h3 id="81bf96ad-ea7d-4f8e-ab7f-f1690376c620" class=""><strong>Bachelor&#x27;s degree in engineering</strong></h3><p id="08627a94-1fc3-44e9-b3f0-b2e9e0a12ebd" class=""><mark class="highlight-gray"><em>2019 - Quitted due to relocation</em></mark></p><p id="f05f5c33-1f93-4100-800d-958820c30deb" class="">The Chinese University of Hong Kong (CUHK) - Hong Kong SAR</p><p id="2b279f2e-7dc1-49c0-a9b0-e993b799bf5e" class="">
+</p><div id="52070d9e-37a5-4c60-9c28-0164513e6ce1" class="collection-content"><h4 class="collection-title">Related Courses Taken</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Course Name</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesMultipleSelect"><path d="M1.91602 4.83789C2.44238 4.83789 2.87305 4.40723 2.87305 3.87402C2.87305 3.34766 2.44238 2.91699 1.91602 2.91699C1.38281 2.91699 0.952148 3.34766 0.952148 3.87402C0.952148 4.40723 1.38281 4.83789 1.91602 4.83789ZM5.1084 4.52344H14.3984C14.7607 4.52344 15.0479 4.23633 15.0479 3.87402C15.0479 3.51172 14.7607 3.22461 14.3984 3.22461H5.1084C4.74609 3.22461 4.45898 3.51172 4.45898 3.87402C4.45898 4.23633 4.74609 4.52344 5.1084 4.52344ZM1.91602 9.03516C2.44238 9.03516 2.87305 8.60449 2.87305 8.07129C2.87305 7.54492 2.44238 7.11426 1.91602 7.11426C1.38281 7.11426 0.952148 7.54492 0.952148 8.07129C0.952148 8.60449 1.38281 9.03516 1.91602 9.03516ZM5.1084 8.7207H14.3984C14.7607 8.7207 15.0479 8.43359 15.0479 8.07129C15.0479 7.70898 14.7607 7.42188 14.3984 7.42188H5.1084C4.74609 7.42188 4.45898 7.70898 4.45898 8.07129C4.45898 8.43359 4.74609 8.7207 5.1084 8.7207ZM1.91602 13.2324C2.44238 13.2324 2.87305 12.8018 2.87305 12.2686C2.87305 11.7422 2.44238 11.3115 1.91602 11.3115C1.38281 11.3115 0.952148 11.7422 0.952148 12.2686C0.952148 12.8018 1.38281 13.2324 1.91602 13.2324ZM5.1084 12.918H14.3984C14.7607 12.918 15.0479 12.6309 15.0479 12.2686C15.0479 11.9062 14.7607 11.6191 14.3984 11.6191H5.1084C4.74609 11.6191 4.45898 11.9062 4.45898 12.2686C4.45898 12.6309 4.74609 12.918 5.1084 12.918Z"></path></svg></span>Semester / Quarter</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>Languages / Skills</th></tr></thead><tbody><tr id="3b6f8ed8-e1d7-466b-9dd9-ecfe496db491"><td class="cell-title"><p>CCIT 4018 Computer Architecture</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-yellow">Semester 1 2018-2019</span></td><td class="cell-^pjf">Logic</td></tr><tr id="dc521fcf-4ca4-4e4e-bc70-f48d10a9feef"><td class="cell-title"><p>CCIT 4020 Introduction to Computer Programming</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-yellow">Semester 1 2018-2019</span></td><td class="cell-^pjf">C</td></tr><tr id="2efbe488-7646-4488-b6cb-d7b847456e24"><td class="cell-title"><p>CCMA 4002 College Mathematics I</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-yellow">Semester 1 2018-2019</span></td><td class="cell-^pjf">Calculus, Matrics</td></tr><tr id="53ad4e78-441e-4d31-9563-0c7f7b5e2029"><td class="cell-title"><p>CCIT 4033 Introduction to Database Systems</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-purple">Semester 2 2018-2019</span></td><td class="cell-^pjf">SQL</td></tr><tr id="bd4931a5-6ebf-4396-82ac-6d7421adfdc1"><td class="cell-title"><p>CCIT 4076 Introduction to Engineering</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-purple">Semester 2 2018-2019</span></td><td class="cell-^pjf">MATLAB</td></tr><tr id="4f82ee43-a944-4ce8-8e35-8f509ca0be31"><td class="cell-title"><p>CCMA 4004 College Mathematics II</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-purple">Semester 2 2018-2019</span></td><td class="cell-^pjf">Calculus, ODE</td></tr><tr id="78c5e21b-b85f-4dac-b182-61cb48db0a52"><td class="cell-title"><p>Computer Science C++ Sequence</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-orange">2020-2021</span></td><td class="cell-^pjf">C/C++</td></tr><tr id="3f0eef1b-c010-48be-96d3-3153ab6eb669"><td class="cell-title"><p>Calculus I - IV</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-orange">2020-2021</span></td><td class="cell-^pjf">Calculus</td></tr><tr id="d3624190-8038-4caf-9366-a0f595072465"><td class="cell-title"><p>Computer Science I Java</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-default">Winter 2021</span></td><td class="cell-^pjf">Java</td></tr><tr id="9ffc7144-2d0b-4914-b51a-11668906113c"><td class="cell-title"><p>MATH 146 Introduction to Statistics</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-default">Winter 2021</span></td><td class="cell-^pjf">Statistics</td></tr><tr id="ab1a0410-ac57-4d5d-b556-303ecb41f919"><td class="cell-title"><p>CSE 311 Foundations of Computing I</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-red">Autumn 2021</span></td><td class="cell-^pjf">Logic</td></tr><tr id="c90ef85c-9bf0-4462-9b08-120525e66503"><td class="cell-title"><p>CSE 351 The Hardware/Software Interface</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-red">Autumn 2021</span></td><td class="cell-^pjf">C/C++</td></tr><tr id="5b090960-bf1e-45cb-af47-4411d9934c9b"><td class="cell-title"><p>CSE 332 Data Structures and Parallelism</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-pink">Winter 2022</span></td><td class="cell-^pjf">Data structures</td></tr><tr id="aae638e5-b069-4b0b-8d12-9023bcdd85d4"><td class="cell-title"><p>EE 205 Introduction to Signal Conditioning</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-pink">Winter 2022</span></td><td class="cell-^pjf">Signal Processing</td></tr><tr id="44b24669-f3b8-461d-adbe-efa9f42361e7"><td class="cell-title"><p>INFO 102 Gender and Information Technology</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-pink">Winter 2022</span></td><td class="cell-^pjf">Inclusive Learning</td></tr><tr id="d1e86acb-dd14-4493-9ae7-608928f1c24f"><td class="cell-title"><p>MATH 207 Introduction to Differential Equations</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-pink">Winter 2022</span></td><td class="cell-^pjf">ODE</td></tr><tr id="61e4b6ae-bf54-4b2d-a763-b521cb9f077e"><td class="cell-title"><p>CSE 312 Foundations of Computing II</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-yellow">Spring 2022</span></td><td class="cell-^pjf">Statistics</td></tr><tr id="cd24ee98-2e59-4708-b351-c84c7dcc72a5"><td class="cell-title"><p>CSE 333 Systems Programming</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-yellow">Spring 2022</span></td><td class="cell-^pjf">C/C++</td></tr><tr id="76a5aefa-1e74-4c7a-9d64-ca84c757d1ad"><td class="cell-title"><p>CSE 369 Introduction To Digital Design</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-yellow">Spring 2022</span></td><td class="cell-^pjf">Verilog</td></tr><tr id="29147708-4396-46f0-946f-0b72580331e1"><td class="cell-title"><p>MATH 208 Linear Algebra</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-yellow">Spring 2022</span></td><td class="cell-^pjf">Matrics</td></tr><tr id="0779d831-547b-49aa-877b-ad47dc8298e9"><td class="cell-title"><p>CSE 344 Introduction to Data Management</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-brown">Autumn 2022</span></td><td class="cell-^pjf">SQL</td></tr><tr id="3da859cc-d664-474a-9cd9-a0af0591b943"><td class="cell-title"><p>CSE 371 Design Of Digital Circuits And Systems</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-brown">Autumn 2022</span></td><td class="cell-^pjf">Verilog</td></tr><tr id="11d7fb0c-e4c9-4e4b-abb2-5f3d216ab47b"><td class="cell-title"><p>CSE 453 Datacenter Systems</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-brown">Autumn 2022</span></td><td class="cell-^pjf">Docker, Go, MATLAB</td></tr><tr id="69e1b74f-21ea-419d-983f-f0ff19b4e4d7"><td class="cell-title"><p>CSE 461 Introduction to Computer Communication Networks</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-brown">Autumn 2022</span></td><td class="cell-^pjf">Go</td></tr><tr id="1c78d103-05d0-46ee-afe3-d28f476f8d61"><td class="cell-title"><p>CSE 331 Software Design &amp; Implementation</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-gray">Winter 2023</span></td><td class="cell-^pjf">Java</td></tr><tr id="cca33d8b-a553-4cea-a26c-af457a5c98de"><td class="cell-title"><p>CSE 452 Distributed Systems</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-gray">Winter 2023</span></td><td class="cell-^pjf">Java</td></tr><tr id="45c14dd2-3411-4495-8fc3-70b8f21e0e02"><td class="cell-title"><p>CSE 484 Computer Security</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-gray">Winter 2023</span></td><td class="cell-^pjf">C/C++, Javascript</td></tr><tr id="952d373f-3567-4375-88bb-2828e8cb231b"><td class="cell-title"><p>CSE 493V Virtual Reality Systems</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-blue">Spring 2023</span></td><td class="cell-^pjf">Javascript, Arduino</td></tr><tr id="56784863-4a1b-4754-868d-7fcba381fcea"><td class="cell-title"><p>CSE 481L Networks and Mobile Systems Capstone</p></td><td class="cell-Pe&gt;L"><span class="selected-value select-value-color-blue">Spring 2023</span></td><td class="cell-^pjf">Go, Java, Javascript</td></tr></tbody></table></div><p id="7f180a78-b788-420d-8803-3cfe1906181e" class="">
+</p><hr id="7a9c1c50-d4ba-457c-9dac-2e4cca9b3799"/><h1 id="39281e21-1576-49a8-b8e4-3de68d54a467" class="">Certification</h1><h3 id="c0f088d6-9fa5-4214-b81a-26a632093348" class="">AWS Certified Solutions Architect</h3><p id="cf4a5e4c-4430-43ad-8280-459ee7a5faab" class=""><a href="https://www.credly.com/badges/50228982-6d7c-4677-a377-6e8dfad2be58/public_url">Badge</a> <a href="https://alanyeung.co/files/AWS-SAA.pdf">Certificate</a></p><p id="fa80b1fa-7fd7-431d-ba4a-0f56bc1b6b9e" class="">
+</p><h3 id="2fc42981-1b71-4fe4-8e3a-d460b65d6a0c" class="">AWS Certified Cloud Practitioner</h3><p id="6565f557-c507-4d0d-b612-9fc17c3bc47f" class=""><a href="https://www.credly.com/badges/8a019431-99fa-49fa-88da-b41bc423b566/public_url">Badge</a> <a href="https://alanyeung.co/files/AWS-CPP.pdf">Certificate</a></p><p id="423afaaf-2909-4f9c-ac56-996f707c0603" class="">
+</p><hr id="06d33104-03cd-43a3-90e6-3791391dfc89"/><h1 id="de9a9239-262a-4b1a-b3cc-8c911d751761" class="">Looking for services?</h1><p id="ff0b5d7c-70a2-4c3e-9f8b-e1215be56ac3" class=""><a href="https://alanyeung.co/services.html">Click me to redirect :)</a></p><p id="3ca369ed-5da9-4edd-9dc0-fe628f0859b1" class="">
+</p></div></article></body></html>

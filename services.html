@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Gonna try something new <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alan Yeung's Page</title>
+    <style>
+        .ui.segment {
+            background: rgb(255, 255, 255, 40%);
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <div class="ui container">
+        <div class="ui segment">
+            <!-- Header -->
+            <h2 class="ui header">
+                <i class="server icon"></i>
+                <div class="content">
+                    Alanyeung's Services Selector
+                    <div class="sub header">Please select your destination website from the list below</div>
+                </div>
+            </h2>
+            <div class="ui divider"></div>
+            <!-- Self hosted Link List -->
+            <p>Public Services List</p>
+            <div class="ui list" id="selfhostedlist">
+            </div>
+            <!-- Self hosted (non-CAS) Link List -->
+            <p>Restricted Services List (Seperate account required for each service)</p>
+            <div class="ui list" id="selfhosted-nonCASlist">
+            </div>
+            <!-- Self hosted (CAS) Link List -->
+            <p>Restricted Services List (Central Authentication Service)</p>
+            <div class="ui list" id="selfhosted-CASlist">
+            </div>
+            <!-- Friend Link List -->
+            <div class="ui divider"></div>
+            <p id="uwheader">University of Washington (UW Authentication System)</p>
+            <div class="ui list" id="uwlist"></div>
+            <!-- Friend Link List -->
+            <div class="ui divider"></div>
+            <p>Friends List</p>
+            <div class="ui list" id="friendlist"></div>
+            <!-- Footer -->
+            <div class="ui divider"></div>
+            <p id="clientinfo"></p>
+            <p>Last updated on 2021 Sep. Powered by Alan Yeung, and <a href="https://semantic-ui.com/">Semantic UI</a>, Hosted @ Github</p>
+        </div>
+    </div>
+    <br>
+</body>
+<script>
+    bubbly({
+        colorStart: '#d5d5d5',
+        colorStop: '#d5d5d5',
+    });
+
+    var link = JSON.parse(`[
+  {
+    "description": "HKWTC Git Service (Gogs)",
+    "link": "https://git.hkwtc.org/",
+    "cat": "selfhosted-nonCAS"
+  },
+    {
+    "description": "Gitlab Service",
+    "link": "https://gitlab.alanyeung.co/",
+    "cat": "selfhosted-CAS"
+  },
+  {
+    "description": "Jenkins",
+    "link": "https://jenkins.alanyeung.co/",
+    "cat": "selfhosted-CAS"
+  },
+  {
+    "description": "Test Server",
+    "link": "https://test.alanyeung.co/",
+    "cat": "selfhosted"
+  },
+  {
+    "description": "AYTechnology",
+    "link": "https://aytechnology.us/",
+    "cat": "selfhosted"
+  },
+  {
+    "description": "Dynmap @ Minecraft Server",
+    "link": "http://mc.alanyeung.co:8123",
+    "cat": "selfhosted"
+  },
+  {
+    "description": "Travian",
+    "link": "https://test.alanyeung.co/travian/",
+    "cat": "selfhosted-nonCAS"
+  },
+  {
+    "description": "ArOZOS Server 01",
+    "link": "https://s01.aroz.alanyeung.co/",
+    "cat": "selfhosted-CAS"
+  },
+  {
+    "description": "ArOZOS Server 02",
+    "link": "https://s02.aroz.alanyeung.co/",
+    "cat": "selfhosted-CAS"
+  },
+  {
+    "description": "ArOZOS Server 03",
+    "link": "https://s03.aroz.alanyeung.co/",
+    "cat": "selfhosted-CAS"
+  },
+  {
+    "description": "ArOZOS Server CAS",
+    "link": "https://auth.alanyeung.co/",
+    "cat": "selfhosted-CAS"
+  },
+  {
+    "description": "Synology NAS",
+    "link": "https://alanyeung.co/synology.php",
+    "cat": "selfhosted-nonCAS"
+  },
+  {
+    "description": "URL shortner",
+    "link": "https://s.alanyeung.co",
+    "cat": "selfhosted"
+  },
+  {
+    "description": "FTP Server (HTTPS, HyperXraft)",
+    "link": "https:/ftp.alanyeung.co/",
+    "cat": "selfhosted"
+  },
+  {
+    "description": "FTP Server (FTP Protocol)",
+    "link": "ftp:/ftp.alanyeung.co/",
+    "cat": "selfhosted-CAS"
+  },
+  {
+    "description": "Uptime mointor",
+    "link": "https://stats.uptimerobot.com/JKvyVhBqBO",
+    "cat": "selfhosted"
+  },
+  {
+    "description": "HKWTC",
+    "link": "http://hkwtc.org",
+    "cat": "friend"
+  },
+  {
+    "description": "IMUSLAB",
+    "link": "http:/imuslab.com",
+    "cat": "friend"
+  },
+  {
+    "description": "My UW",
+    "link": "https://my.uw.edu",
+    "cat": "uw"
+  },
+  {
+    "description": "My CSE",
+    "link": "http://mycse.cs.washington.edu/",
+    "cat": "uw"
+  },
+  {
+    "description": "UW CSE Slack",
+    "link": "https://uw-cse-ugrad.slack.com/",
+    "cat": "uw"
+  },
+  {
+    "description": "UW CSE SSH Server",
+    "link": "ssh://attu.cs.washington.edu",
+    "cat": "uw"
+  },
+  {
+    "description": "UW CSE VDI Server",
+    "link": "https://vdi.cs.washington.edu/",
+    "cat": "uw"
+  },
+  {
+    "description": "UW ENGR VDI Server",
+    "link": "https://vdi.engr.washington.edu/",
+    "cat": "uw"
+  },
+  {
+    "description": "UW CSE Gitlab",
+    "link": "https://gitlab.cs.washington.edu/",
+    "cat": "uw"
+  },
+  {
+    "description": "UW Network Stat",
+    "link": "https://networks.uw.edu/networks/",
+    "cat": "uw"
+  },
+  {
+    "description": "UW CSE SSH Server Stat",
+    "link": "https://nms.cs.washington.edu/stats/index.php?group=instr",
+    "cat": "uw"	
+  },
+  {
+    "description": "UW CSE SMB Share",
+    "link": "smb://tango.cs.washington.edu",
+    "cat": "uw"	
+  },
+  {
+    "description": "UW My Plan",
+    "link": "smb://myplan.uw.edu",
+    "cat": "uw"	
+  }
+]`);
+
+    $(link).each(function(index, item) {
+        var appendTo = "selfhostedlist";
+        if (item["cat"] == "friend") {
+            appendTo = "friendlist";
+        } else if (item["cat"] == "uw") {
+            appendTo = "uwlist";
+        } else if (item["cat"] == "selfhosted-nonCAS") {
+            appendTo = "selfhosted-nonCASlist";
+        } else if (item["cat"] == "selfhosted-CAS") {
+            appendTo = "selfhosted-CASlist";
+        }
+        $("#" + appendTo).append('<div class="item"><a href="' + item["link"] + '">' + item["description"] + '</a></div>');
+    });
+
+    $.getJSON("./geoip/", function(data) {
+        if (data["Country"]["Names"] != null) {
+            $("#clientinfo").text("You are from " + data["Country"]["Names"]["en"] + " (" + data["Country"]["Names"]["ja"] + ") " + country2emoji(data["Country"]["IsoCode"]));
+        }
+    });
+
+    //https://gist.github.com/theory-of-soul/220dfe7a7f383325510be31ffb0d362e
+    function country2emoji(country_code) {
+        var OFFSET = 127397;
+        var cc = country_code.toUpperCase();
+
+        function _toConsumableArray(arr) {
+            if (Array.isArray(arr)) {
+                for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+                    arr2[i] = arr[i];
+                }
+                return arr2;
+            } else {
+                return Array.from(arr);
+            }
+        }
+        return /^[A-Z]{2}$/.test(cc) ? String.fromCodePoint.apply(String, _toConsumableArray([].concat(_toConsumableArray(cc)).map(function(c) {
+            return c.charCodeAt() + OFFSET;
+        }))) : null;
+    }
+</script>
+
+</html>
