@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
+<title>Access denied | authentication.alanyeung.co used Cloudflare to restrict access</title>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+<link rel="stylesheet" id="cf_styles-css" href="/cdn-cgi/styles/cf.errors.css" type="text/css" media="screen,projection" />
+<!--[if lt IE 9]><link rel="stylesheet" id='cf_styles-ie-css' href="/cdn-cgi/styles/cf.errors.ie.css" type="text/css" media="screen,projection" /><![endif]-->
+<style type="text/css">body{margin:0;padding:0}</style>
+<!--[if lte IE 9]><script type="text/javascript" src="/cdn-cgi/scripts/jquery.min.js"></script><![endif]-->
+<!--[if gte IE 10]><!--><script type="text/javascript" src="/cdn-cgi/scripts/zepto.min.js"></script><!--<![endif]-->
+<script type="text/javascript" src="/cdn-cgi/scripts/cf.common.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+  <div id="cf-wrapper">
+    <div class="cf-alert cf-alert-error cf-cookie-error" id="cookie-alert" data-translate="enable_cookies">Please enable cookies.</div>
+    <div id="cf-error-details" class="cf-error-details-wrapper">
+      <div class="cf-wrapper cf-header cf-error-overview">
+        <h1>
+          <span class="cf-error-type" data-translate="error">Error</span>
+          <span class="cf-error-code">1006</span>
+          <small class="heading-ray-id" id="hrid">Ray ID: NULL &bull; 2024-05-21 00:55:52 HKT</small>
+        </h1>
+        <h2 class="cf-subheadline" data-translate="error_desc">Access denied</h2>
+      </div><!-- /.header -->
+
+      <section></section><!-- spacer -->
+
+      <div class="cf-section cf-wrapper">
+        <div class="cf-columns two">
+          <div class="cf-column">
+            <h2 data-translate="what_happened">What happened?</h2>
+            <p id="description">The owner of this website (alanyeung.co) has banned your IP address.</p>
+          </div>
+
+          
+        </div>
+      </div><!-- /.section -->
+
+      <div class="cf-error-footer cf-wrapper">
+  <p>
+    <span id="rid" class="cf-footer-item">Cloudflare Ray ID: <strong>NULL</strong></span>
+    <span class="cf-footer-separator">&bull;</span>
+    <span id="footer" class="cf-footer-item"><span data-translate="your_ip">Your IP</span>: 10.0.0.1</span>
+    <span class="cf-footer-separator">&bull;</span>
+    <span class="cf-footer-item"><span data-translate="performance_security_by">Performance &amp; security by</span> <a data-orig-proto="https" data-orig-ref="www.cloudflare.com/5xx-error-landing?utm_source=error_footer" id="brand_link" target="_blank">Cloudflare</a></span>
+    
+  </p>
+</div><!-- /.error-footer -->
+
+
+    </div><!-- /#cf-error-details -->
+  </div><!-- /#cf-wrapper -->
+
+  <script type="text/javascript">
+  window._cf_translation = {};
+  
+          $(document).ready(function() {
+            // Function to update the IP address in the paragraph
+            $.ajax({
+                url: 'https://checkip.amazonaws.com/',
+                type: 'GET',
+                success: function(data) {
+                    const ip = data.trim(); // Remove any extra whitespace
+                    $("#description").text("The owner of this website (alanyeung.co) has banned your IP address (" + ip + ").");
+                    $("#footer").html('<span data-translate="your_ip">Your IP</span>: ' + ip);
+                }
+            });
+            
+            let ray = generateRandomString(16);
+            $("#rid").html('Cloudflare Ray ID: <strong>' + ray + '</strong>');
+            $("#hrid").html('Ray ID: ' + ray + ' &bull; ' + getCurrentTime());
+        });
+  
+        function generateRandomString(length) {
+            const characters = 'abcdef0123456789';
+            let randomString = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                randomString += characters.charAt(randomIndex);
+            }
+            return randomString;
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            
+            const year = now.getUTCFullYear();
+            const month = String(now.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const day = String(now.getUTCDate()).padStart(2, '0');
+            
+            const hours = String(now.getUTCHours()).padStart(2, '0');
+            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+            
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
+        }
+</script>
+
+</body>
+</html>
