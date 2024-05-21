@@ -11,8 +11,7 @@
                 url: 'https://api.country.is/',
                 type: 'GET',
                 success: function(data) {
-                    var p = JSON.parse(data);
-                    if(p.country != 'US') {
+                    if(data.country != 'US') {
                         window.location.href = 'https://alanyeung.co/forbidden.html';
                     }else{
                         window.location.href = 'https://purple-candy-fd3.notion.site/Alan-Ho-Lun-Yeung-dca4cd77904448bb822b5eb9b995f817?pvs=4';
