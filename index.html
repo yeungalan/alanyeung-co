@@ -1,9 +1,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml">    
     <head>      
       <title>Moved</title>      
-      <meta http-equiv="refresh" content="0;URL='https://purple-candy-fd3.notion.site/Alan-Ho-Lun-Yeung-dca4cd77904448bb822b5eb9b995f817?pvs=4'" />    
+      <!-- <meta http-equiv="refresh" content="0;URL='https://purple-candy-fd3.notion.site/Alan-Ho-Lun-Yeung-dca4cd77904448bb822b5eb9b995f817?pvs=4'" />    -->
     </head>    
     <body> 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: 'https://api.alanyeung.co',
+                type: 'GET',
+                success: function(data) {
+                    window.location.href = 'https://purple-candy-fd3.notion.site/Alan-Ho-Lun-Yeung-dca4cd77904448bb822b5eb9b995f817?pvs=4';
+                },
+                error: function(jqXHR) {
+                    window.location.href = 'https://alanyeung.co/forbidden.html';
+                }
+            });
+        });
+    </script>
+        
       <p>This page has moved to <a href="https://purple-candy-fd3.notion.site/Alan-Ho-Lun-Yeung-dca4cd77904448bb822b5eb9b995f817?pvs=4">
         alanyeung.co</a>.</p> 
     </body>  
