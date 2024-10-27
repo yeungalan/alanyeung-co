@@ -44,10 +44,6 @@
             </div>
             <!-- Friend Link List -->
             <div class="ui divider"></div>
-            <p id="uwheader">University of Washington (UW Authentication System)</p>
-            <div class="ui list" id="uwlist"></div>
-            <!-- Friend Link List -->
-            <div class="ui divider"></div>
             <p>Friends List</p>
             <div class="ui list" id="friendlist"></div>
             <!-- Footer -->
@@ -83,12 +79,7 @@
   {
     "description": "Test Server",
     "link": "https://test.alanyeung.co/",
-    "cat": "selfhosted"
-  },
-  {
-    "description": "AYTechnology",
-    "link": "https://aytechnology.us/",
-    "cat": "selfhosted"
+    "cat": "selfhosted-CAS"
   },
   {
     "description": "Dynmap @ Minecraft Server",
@@ -154,61 +145,6 @@
     "description": "IMUSLAB",
     "link": "http:/imuslab.com",
     "cat": "friend"
-  },
-  {
-    "description": "My UW",
-    "link": "https://my.uw.edu",
-    "cat": "uw"
-  },
-  {
-    "description": "My CSE",
-    "link": "http://mycse.cs.washington.edu/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE Slack",
-    "link": "https://uw-cse-ugrad.slack.com/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE SSH Server",
-    "link": "ssh://attu.cs.washington.edu",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE VDI Server",
-    "link": "https://vdi.cs.washington.edu/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW ENGR VDI Server",
-    "link": "https://vdi.engr.washington.edu/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE Gitlab",
-    "link": "https://gitlab.cs.washington.edu/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW Network Stat",
-    "link": "https://networks.uw.edu/networks/",
-    "cat": "uw"
-  },
-  {
-    "description": "UW CSE SSH Server Stat",
-    "link": "https://nms.cs.washington.edu/stats/index.php?group=instr",
-    "cat": "uw"	
-  },
-  {
-    "description": "UW CSE SMB Share",
-    "link": "smb://tango.cs.washington.edu",
-    "cat": "uw"	
-  },
-  {
-    "description": "UW My Plan",
-    "link": "smb://myplan.uw.edu",
-    "cat": "uw"	
   }
 ]`);
 
@@ -216,8 +152,6 @@
         var appendTo = "selfhostedlist";
         if (item["cat"] == "friend") {
             appendTo = "friendlist";
-        } else if (item["cat"] == "uw") {
-            appendTo = "uwlist";
         } else if (item["cat"] == "selfhosted-nonCAS") {
             appendTo = "selfhosted-nonCASlist";
         } else if (item["cat"] == "selfhosted-CAS") {
